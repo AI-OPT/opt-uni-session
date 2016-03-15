@@ -1,0 +1,67 @@
+group 'com.ai.opt.uni.session'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.7
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+ext {
+    baseProjectName = "opt-uni-session";
+    crmSDKVersion = "1.0-SNAPSHOT"
+    publishUserName = "runnerdev"
+    publishUserPassword = "runnerdev"
+    publishURL = "http://10.1.228.199:18081/nexus/content/repositories/snapshots/"
+}
+
+repositories {
+    maven { url "http://10.1.228.199:18081/nexus/content/groups/public/" }
+}
+
+dependencies {
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+	compile 'com.ai.opt.sdk:opt-sdk:1.0-SNAPSHOT'
+	
+}
+
+publish.dependsOn build
+
+
+publishing {
+    publications {
+        publishing.publications.create("${baseProjectName}", MavenPublication) {
+            groupId group
+            artifactId baseProjectName
+            version version
+            artifact jar
+            pom.withXml {
+                asNode().children().last() + {
+                    delegate.dependencies {
+                     delegate.dependency {
+                            delegate.groupId("com.ai.opt.sdk")
+                            delegate.artifactId("opt-sdk")
+                            delegate.version("1.0-SNAPSHOT")
+                        }
+                        delegate.dependency {
+                            delegate.groupId("javax.servlet")
+                            delegate.artifactId("javax.servlet-api")
+                            delegate.version("3.1.0")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url publishURL
+            credentials {
+                username = publishUserName
+                password = publishUserPassword
+            }
+        }
+    }
+}
+
