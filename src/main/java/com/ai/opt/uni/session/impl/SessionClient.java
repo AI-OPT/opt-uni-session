@@ -10,8 +10,8 @@ import java.util.ResourceBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.ai.opt.sdk.cache.client.ICacheClient;
-import com.ai.opt.sdk.cache.factory.CacheClientBuilderFactory;
+import com.ai.opt.sdk.cache.factory.CacheClientFactory;
+import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 
 /**
  * redis的客户端实现
@@ -45,7 +45,7 @@ public class SessionClient {
     	LOG.debug("【-_-】SessionClient.getCacheClient() begin.........................");
     	String NameSpace = getSessionPassNameSpace();
     	LOG.debug("【-_-】SessionClient.getCacheClient() 统一缓存命名空间为配置值："+NameSpace);
-    	ICacheClient CacheClient =  CacheClientBuilderFactory.getCacheClientBuilder().getCacheClient(NameSpace);
+    	ICacheClient CacheClient =  CacheClientFactory.getCacheClient(NameSpace);
     	long t2=System.currentTimeMillis()-t1;   
 
     	LOG.debug("【-_-】SessionClient.getCacheClient() end........" +
@@ -103,7 +103,7 @@ public class SessionClient {
         byte[] data = null;
         long t1=System.currentTimeMillis();   
     	LOG.debug("SessionClient。getSession ：key="+key+"begin");
-        data = getCacheClient().hget(key.getBytes());
+        data = getCacheClient().get(key.getBytes());
         long t2=System.currentTimeMillis()-t1;   
         LOG.debug("SessionClient。getSession ：key="+key+"end .{ getCacheClient().hget cost time: " +t2);
         return deserialize(data);
