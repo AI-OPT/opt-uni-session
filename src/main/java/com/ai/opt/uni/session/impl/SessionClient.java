@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.ai.opt.sdk.cache.factory.CacheClientFactory;
+import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 
 /**
@@ -45,7 +45,7 @@ public class SessionClient {
     	LOG.debug("【-_-】SessionClient.getCacheClient() begin.........................");
     	String NameSpace = getSessionPassNameSpace();
     	LOG.debug("【-_-】SessionClient.getCacheClient() 统一缓存命名空间为配置值："+NameSpace);
-    	ICacheClient CacheClient =  CacheClientFactory.getCacheClient(NameSpace);
+    	ICacheClient CacheClient =  MCSClientFactory.getCacheClient(NameSpace);
     	long t2=System.currentTimeMillis()-t1;   
 
     	LOG.debug("【-_-】SessionClient.getCacheClient() end........" +

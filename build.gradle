@@ -9,8 +9,9 @@ sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 ext {
-    baseProjectName = "opt-uni-session";
-    crmSDKVersion = "1.0-SNAPSHOT"
+    baseProjectName = "opt-uni-session"
+    moduleVersion = "2.0-SNAPSHOT"
+    optSdkVersion="2.0-SNAPSHOT"
     publishUserName = "runnerdev"
     publishUserPassword = "runnerdev"
     publishURL = "http://10.1.228.199:18081/nexus/content/repositories/snapshots/"
@@ -22,7 +23,7 @@ repositories {
 
 dependencies {
     compile "javax.servlet:javax.servlet-api:3.1.0"
-	compile 'com.ai.opt.sdk:opt-sdk:1.0-SNAPSHOT'
+	compile 'com.ai.opt.sdk:opt-sdk:2.0-SNAPSHOT'
 	
 }
 
@@ -34,7 +35,7 @@ publishing {
         publishing.publications.create("${baseProjectName}", MavenPublication) {
             groupId group
             artifactId baseProjectName
-            version version
+            version moduleVersion
             artifact jar
             pom.withXml {
                 asNode().children().last() + {
@@ -42,7 +43,7 @@ publishing {
                      delegate.dependency {
                             delegate.groupId("com.ai.opt.sdk")
                             delegate.artifactId("opt-sdk")
-                            delegate.version("1.0-SNAPSHOT")
+                            delegate.version("2.0-SNAPSHOT")
                         }
                         delegate.dependency {
                             delegate.groupId("javax.servlet")
