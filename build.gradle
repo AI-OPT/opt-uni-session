@@ -7,7 +7,10 @@ apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
+configurations.all { 
+	    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+	    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+ 	}
 ext {
     baseProjectName = "opt-uni-session"
     moduleVersion = "2.0-SNAPSHOT"
