@@ -53,6 +53,7 @@ publishing {
                                     delegate.artifactId("quartz")
                                 }
                         	}
+                        }
                         delegate.dependency {
                             delegate.groupId("javax.servlet")
                             delegate.artifactId("javax.servlet-api")
