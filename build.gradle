@@ -46,8 +46,13 @@ publishing {
                      delegate.dependency {
                             delegate.groupId("com.ai.opt.sdk")
                             delegate.artifactId("opt-sdk")
-                            delegate.version("2.0-SNAPSHOT")
-                        }
+                            delegate.version("2.1-SNAPSHOT")
+                            delegate.exclusions{
+                                delegate.exclusion{
+                                    delegate.groupId("org.quartz-scheduler")
+                                    delegate.artifactId("quartz")
+                                }
+                        	}
                         delegate.dependency {
                             delegate.groupId("javax.servlet")
                             delegate.artifactId("javax.servlet-api")
