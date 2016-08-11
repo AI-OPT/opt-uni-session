@@ -134,8 +134,12 @@ public class SessionManager {
         Cookie cookie = new Cookie(SESSION_ID_COOKIE, null);
         if (!StringUtils.isBlank(domain))
             cookie.setDomain(domain);
-        cookie.setPath(StringUtils.isBlank(request.getContextPath()) ? "/"
-                : request.getContextPath());
+        String cookiePath="/";
+        if(request!=null&&!StringUtils.isBlank(request.getContextPath())){
+        	cookiePath=request.getContextPath();
+        }
+        cookie.setPath(cookiePath);
+        
         if (session.expired)
             cookie.setMaxAge(0);
         else if (session.isNew) {
