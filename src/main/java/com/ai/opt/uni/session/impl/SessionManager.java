@@ -141,8 +141,13 @@ public class SessionManager {
         if (!StringUtils.isBlank(domain))
             cookie.setDomain(domain);
         String cookiePath="/";
-        if(request!=null&&!StringUtils.isBlank(request.getContextPath())){
-        	cookiePath=request.getContextPath();
+        try{
+	        if(request!=null&&!StringUtils.isBlank(request.getContextPath())){
+	        	cookiePath=request.getContextPath();
+	        }
+        }
+        catch(Exception e){
+        	log.error("获取cookiepath失败!采用默认的根目录/");
         }
         cookie.setPath(cookiePath);
         
