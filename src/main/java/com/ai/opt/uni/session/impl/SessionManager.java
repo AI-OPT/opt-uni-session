@@ -1,17 +1,23 @@
 package com.ai.opt.uni.session.impl;
 
+import java.util.UUID;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ai.opt.uni.session.RequestEventObserver;
 import com.ai.opt.uni.session.exception.SessionException;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import javax.servlet.http.*;
-import java.util.UUID;
-
 public class SessionManager {
 
-    private Logger log = Logger.getLogger(SessionManager.class);
+    private Logger log = LoggerFactory.getLogger(SessionManager.class);
     private static final String SESSION_ID_PREFIX = "R_JSID_";
     private static String SESSION_ID_COOKIE = "AIOPT_JSESSIONID";
     private SessionClient cacheClient = new SessionClient();
