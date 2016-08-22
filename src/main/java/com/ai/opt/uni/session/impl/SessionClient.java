@@ -7,8 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.ai.opt.sdk.components.mcs.MCSClientFactory;
 import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
@@ -17,7 +17,7 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
  * redis的客户端实现
  */
 public class SessionClient {
-	  private static final Logger LOG = LoggerFactory.getLogger(SessionClient.class);
+	  private static final Log LOG = LogFactory.getLog(SessionClient.class);
 
     //private static final String SESSION_PAAS_NAMESPACE = "com.ai.runner.uni.session.SessionClient";
     private static String SESSION_PAAS_NAMESPACE  ;

@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.ai.opt.uni.session.RequestEventObserver;
 import com.ai.opt.uni.session.exception.SessionException;
 
 public class SessionManager {
 
-    private Logger log = LoggerFactory.getLogger(SessionManager.class);
+    private Log log = LogFactory.getLog(SessionManager.class);
     private static final String SESSION_ID_PREFIX = "R_JSID_";
     private static String SESSION_ID_COOKIE = "AIOPT_JSESSIONID";
     private SessionClient cacheClient = new SessionClient();
