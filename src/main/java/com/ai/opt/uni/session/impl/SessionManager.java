@@ -14,7 +14,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.ai.opt.uni.session.RequestEventObserver;
 import com.ai.opt.uni.session.exception.SessionException;
-import com.ai.paas.ipaas.util.StringUtil;
 
 public class SessionManager {
 
@@ -143,7 +142,7 @@ public class SessionManager {
             cookie.setDomain(domain);
         String cookiePath=request.getContextPath();
         //cookiePath为空时，必须设置为"/"，否则IE浏览器无法解析""的cookiePath，取不到session
-        if(StringUtil.isBlank(cookiePath)){
+        if(StringUtils.isBlank(cookiePath)){
         	cookiePath="/";
         }
         cookie.setPath(cookiePath);
