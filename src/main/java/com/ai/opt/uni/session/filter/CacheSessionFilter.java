@@ -4,6 +4,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ai.opt.uni.session.impl.RequestEventSubject;
 import com.ai.opt.uni.session.impl.SessionHttpServletRequestWrapper;
 import com.ai.opt.uni.session.impl.SessionManager;
@@ -44,7 +46,7 @@ public class CacheSessionFilter implements Filter {
     private boolean shouldFilter(HttpServletRequest request) {
         String uri = request.getRequestURI().toLowerCase();
         for (String suffix : IGNORE_SUFFIX) {
-            if (uri.endsWith(suffix))
+            if (!StringUtils.isBlank(suffix)&&uri.endsWith(suffix.trim()))
                 return false;
         }
         return true;
