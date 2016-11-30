@@ -32,7 +32,6 @@ dependencies {
 
 publish.dependsOn build
 
-
 publishing {
     publications {
         publishing.publications.create("${baseProjectName}", MavenPublication) {
