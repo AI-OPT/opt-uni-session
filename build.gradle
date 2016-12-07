@@ -32,7 +32,6 @@ dependencies {
 
 publish.dependsOn build
 
-
 publishing {
     publications {
         publishing.publications.create("${baseProjectName}", MavenPublication) {
@@ -46,7 +45,7 @@ publishing {
                      delegate.dependency {
                             delegate.groupId("com.ai.opt.sdk")
                             delegate.artifactId("opt-sdk")
-                            delegate.version("2.1-SNAPSHOT")
+                            delegate.version("2.0-SNAPSHOT")
                             delegate.exclusions{
                                 delegate.exclusion{
                                     delegate.groupId("org.quartz-scheduler")
