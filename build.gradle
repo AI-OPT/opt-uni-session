@@ -13,7 +13,7 @@ configurations.all {
  	}
 ext {
     baseProjectName = "opt-uni-session"
-    moduleVersion = "2.0-SNAPSHOT"
+    moduleVersion = "2.1-SNAPSHOT"
     optSdkVersion="2.0-SNAPSHOT"
     publishUserName = "runnerdev"
     publishUserPassword = "runnerdev"

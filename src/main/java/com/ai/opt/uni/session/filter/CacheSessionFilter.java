@@ -13,10 +13,15 @@ import com.ai.opt.uni.session.impl.SessionManager;
 import java.io.IOException;
 
 public class CacheSessionFilter implements Filter {
-    // public static final String[] IGNORE_SUFFIX = { ".png", ".jpg", ".jpeg",
-    // ".gif", ".css", ".js", ".html", ".htm" };
-    public static String[] IGNORE_SUFFIX = {};
-    private SessionManager sessionManager = new SessionManager();
+    /**
+     * IGNORE_SUFFIX = { ".png", ".jpg", ".jpeg",".gif", ".css", ".js", ".html", ".htm" };
+     */
+	public static String[] IGNORE_SUFFIX = {};
+    /**
+     * cookie的名称
+     */
+    public static String COOKIE_NAME = "AIOPT_JSESSIONID";
+    private SessionManager sessionManager = null;
 
     public void destroy() {
 
@@ -54,8 +59,15 @@ public class CacheSessionFilter implements Filter {
 
     public void init(FilterConfig fc) throws ServletException {
         String ignore_suffix = fc.getInitParameter("ignore_suffix");
-        if (!"".equals(ignore_suffix))
+        if (!"".equals(ignore_suffix)){
             IGNORE_SUFFIX = fc.getInitParameter("ignore_suffix").split(",");
+        }
+        
+        String cookie_name = fc.getInitParameter("cookie_name");
+        if (!"".equals(cookie_name)){
+            COOKIE_NAME = fc.getInitParameter("cookie_name").trim();
+        }
+        sessionManager = new SessionManager(COOKIE_NAME);
     }
 
 }

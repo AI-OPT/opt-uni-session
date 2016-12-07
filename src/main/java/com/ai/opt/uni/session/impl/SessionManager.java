@@ -19,19 +19,28 @@ public class SessionManager {
 
     private Log log = LogFactory.getLog(SessionManager.class);
     private static final String SESSION_ID_PREFIX = "R_JSID_";
-    private static String SESSION_ID_COOKIE = "AIOPT_JSESSIONID";
+    private String sessionCookieName = "AIOPT_JSESSIONID";
     private SessionClient cacheClient = new SessionClient();
     private int expirationUpdateInterval = 300;
     private int maxInactiveInterval = 7200;
     private String domain = "";
+    
+    public SessionManager() {
+		super();
+		String sessionInCookie = System.getenv("Session.In.Cookie");
+        if (sessionInCookie != null && sessionInCookie.length() > 0){
+        	sessionCookieName = sessionInCookie;
+        }
+	}
+    
+	public SessionManager(String sessionCookieName) {
+		super();
+		this.sessionCookieName = sessionCookieName;
+	}
 
-    static {
-        String sessionInCookie = System.getenv("Session.In.Cookie");
-        if (sessionInCookie != null && sessionInCookie.length() > 0)
-            SESSION_ID_COOKIE = sessionInCookie;
-    }
 
-    public CacheHttpSession createSession(
+
+	public CacheHttpSession createSession(
             SessionHttpServletRequestWrapper request,
             HttpServletResponse response,
             RequestEventSubject requestEventSubject, boolean create) {
@@ -59,7 +68,7 @@ public class SessionManager {
         if ((cookies == null) || (cookies.length == 0))
             return null;
         for (Cookie cookie : cookies) {
-            if (SESSION_ID_COOKIE.equals(cookie.getName()))
+            if (sessionCookieName.equals(cookie.getName()))
                 return cookie.getValue();
         }
         return null;
@@ -140,7 +149,7 @@ public class SessionManager {
 
     private void addCookie(CacheHttpSession session,
                            HttpServletRequestWrapper request, HttpServletResponse response) {
-        Cookie cookie = new Cookie(SESSION_ID_COOKIE, null);
+        Cookie cookie = new Cookie(sessionCookieName, null);
         if (!StringUtils.isBlank(domain))
             cookie.setDomain(domain);
         String cookiePath=session.getContextPath();
@@ -168,7 +177,7 @@ public class SessionManager {
             addCookie(session, request, response);
         } else {
             for (Cookie cookie : cookies) {
-                if (SESSION_ID_COOKIE.equals(cookie.getName())) {
+                if (sessionCookieName.equals(cookie.getName())) {
                     if (!StringUtils.isBlank(domain))
                         cookie.setDomain(domain);
                     cookie.setPath(StringUtils.isBlank(session.getContextPath()) ? "/"
