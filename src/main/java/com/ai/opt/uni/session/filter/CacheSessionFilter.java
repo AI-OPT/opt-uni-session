@@ -86,7 +86,7 @@ public class CacheSessionFilter implements Filter {
         }
         
         String cookie_name = fc.getInitParameter("cookie_name");
-        if (!"".equals(cookie_name)){
+        if (StringUtils.isNotBlank(cookie_name)){
             COOKIE_NAME = fc.getInitParameter("cookie_name").trim();
         }
         sessionManager = new SessionManager(COOKIE_NAME);
