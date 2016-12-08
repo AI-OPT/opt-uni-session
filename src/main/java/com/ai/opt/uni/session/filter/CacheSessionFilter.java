@@ -81,7 +81,7 @@ public class CacheSessionFilter implements Filter {
 
     public void init(FilterConfig fc) throws ServletException {
         String ignore_suffix = fc.getInitParameter("ignore_suffix");
-        if (!"".equals(ignore_suffix)){
+        if (StringUtils.isNotBlank(ignore_suffix)){
             IGNORE_SUFFIX = fc.getInitParameter("ignore_suffix").split(",");
         }
         
