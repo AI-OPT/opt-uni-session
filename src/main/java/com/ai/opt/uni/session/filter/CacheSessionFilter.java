@@ -11,12 +11,39 @@ import com.ai.opt.uni.session.impl.SessionHttpServletRequestWrapper;
 import com.ai.opt.uni.session.impl.SessionManager;
 
 import java.io.IOException;
-
+/**
+ * 统一session过滤器
+ * web.xml中配置示例：
+ * <filter>
+        <filter-name>sessionFilter</filter-name>
+        <filter-class>com.ai.opt.uni.session.filter.CacheSessionFilter</filter-class>
+        <init-param>
+            <param-name>ignore_suffix</param-name>
+            <param-value>.png,.jpg,.jpeg,.gif,.css,.js,.html,.htm</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie_name</param-name>
+            <param-value>YC_PORTAL_JESSIONID</param-value>
+        </init-param>
+    </filter>
+ *
+ * Date: 2016年12月7日 <br>
+ * Copyright (c) 2016 asiainfo.com <br>
+ * @author gucl
+ */
 public class CacheSessionFilter implements Filter {
-    // public static final String[] IGNORE_SUFFIX = { ".png", ".jpg", ".jpeg",
-    // ".gif", ".css", ".js", ".html", ".htm" };
-    public static String[] IGNORE_SUFFIX = {};
-    private SessionManager sessionManager = new SessionManager();
+    /**
+     * 忽略的后缀名称
+     * IGNORE_SUFFIX = { ".png", ".jpg", ".jpeg",".gif", ".css", ".js", ".html", ".htm" };
+     * 
+     */
+	public static String[] IGNORE_SUFFIX = {};
+    /**
+     * 统一session的cookie的名称 如：YC_PORTAL_JESSIONID
+     * 
+     */
+    public static String COOKIE_NAME = "AIOPT_JSESSIONID";
+    private SessionManager sessionManager = null;
 
     public void destroy() {
 
@@ -54,8 +81,15 @@ public class CacheSessionFilter implements Filter {
 
     public void init(FilterConfig fc) throws ServletException {
         String ignore_suffix = fc.getInitParameter("ignore_suffix");
-        if (!"".equals(ignore_suffix))
+        if (StringUtils.isNotBlank(ignore_suffix)){
             IGNORE_SUFFIX = fc.getInitParameter("ignore_suffix").split(",");
+        }
+        
+        String cookie_name = fc.getInitParameter("cookie_name");
+        if (StringUtils.isNotBlank(cookie_name)){
+            COOKIE_NAME = fc.getInitParameter("cookie_name").trim();
+        }
+        sessionManager = new SessionManager(COOKIE_NAME);
     }
 
 }
