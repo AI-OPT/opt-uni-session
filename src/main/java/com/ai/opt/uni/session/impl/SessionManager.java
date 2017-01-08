@@ -77,7 +77,7 @@ public class SessionManager {
     private void saveSession(CacheHttpSession session) {
         try {
             ////if (this.log.isDebugEnabled())
-                this.log.info("CacheHttpSession saveSession [ID=" + session.id
+                this.log.info("【统一session["+session.id+"]】 CacheHttpSession saveSession [ID=" + session.id
                         + ",isNew=" + session.isNew + ",isDiry="
                         + session.isDirty + ",isExpired=" + session.expired
                         + "]");
@@ -103,7 +103,7 @@ public class SessionManager {
         session.maxInactiveInterval = this.maxInactiveInterval;
         session.isNew = true;
         ////if (this.log.isDebugEnabled())
-            this.log.info("CacheHttpSession Create [ID=" + session.id + "]");
+            this.log.info("【统一session["+session.id+"]】 CacheHttpSession Create [ID=" + session.id + "]");
     	//GUCL：将应用程序上下文存放到session的contextPath里面
         session.setContextPath(request.getContextPath());
         saveCookie(session, request, response);
@@ -130,7 +130,7 @@ public class SessionManager {
                 int updateInterval = (int) ((System.currentTimeMillis() - session.lastAccessedTime) / 1000L);
                //// if (SessionManager.this.log.isDebugEnabled()) {
                   SessionManager.this.log
-                            .info("CacheHttpSession Request completed [ID="
+                            .info("【统一session["+session.id+"]】 CacheHttpSession Request completed [ID="
                                     + session.id + ",lastAccessedTime="
                                     + session.lastAccessedTime
                                     + ",updateInterval=" + updateInterval + "]");
@@ -149,7 +149,7 @@ public class SessionManager {
 
     private void addCookie(CacheHttpSession session,
                            HttpServletRequestWrapper request, HttpServletResponse response) {
-    	log.info("====开始添加cookie");
+    	log.info("====【统一session["+session.id+"]】 开始添加cookie ");
         Cookie cookie = new Cookie(sessionCookieName, null);
         if (!StringUtils.isBlank(domain))
             cookie.setDomain(domain);
@@ -159,20 +159,20 @@ public class SessionManager {
         	cookiePath="/";
         }
         cookie.setPath(cookiePath);
-        log.info("sessionCookieName="+sessionCookieName);
-    	log.info("domain="+domain);
-    	log.info("cookiePath="+cookiePath);
+        log.info("【统一session["+session.id+"]】 sessionCookieName="+sessionCookieName);
+    	log.info("【统一session["+session.id+"]】 domain="+domain);
+    	log.info("【统一session["+session.id+"]】 cookiePath="+cookiePath);
         
         if (session.expired){
         	cookie.setMaxAge(0);
-        	log.info("cookie["+sessionCookieName+"]已过期，销毁cookie");
+        	log.info("【统一session["+session.id+"]】 cookie["+sessionCookieName+"]已过期，销毁cookie");
         }
         else if (session.isNew) {
             cookie.setValue(session.getId());
-            log.info("cookie["+sessionCookieName+"]为新建，创建cookie");
+            log.info("【统一session["+session.id+"]】 cookie["+sessionCookieName+"]为新建，创建cookie");
         }
         response.addCookie(cookie);
-        log.info("====结束添加cookie");
+        log.info("====【统一session["+session.id+"]】 结束添加cookie");
     }
 
     private void saveCookie(CacheHttpSession session,
@@ -196,7 +196,7 @@ public class SessionManager {
             addCookie(session, request, response);
         }
         if (this.log.isInfoEnabled())
-            this.log.info("CacheHttpSession saveCookie [ID=" + session.id
+            this.log.info("【统一session["+session.id+"]】 CacheHttpSession saveCookie [ID=" + session.id
                     + "]");
     }
 
@@ -206,13 +206,13 @@ public class SessionManager {
             HttpSession data = this
                     .getSessionFromCache(generatorSessionKey(sessionId));
             if (data == null) {
-                this.log.info("Session " + sessionId + " not found in Redis");
+                this.log.info("【统一session["+sessionId+"]】 Session " + sessionId + " not found in Redis");
                 session = null;
             } else {
                 session = (CacheHttpSession) data;
             }
             if (this.log.isInfoEnabled())
-                this.log.info("CacheHttpSession Load [ID=" + sessionId
+                this.log.info("【统一session["+sessionId+"]】 CacheHttpSession Load [ID=" + sessionId
                         + ",exist=" + (session != null) + "]");
             if (session != null) {
                 session.isNew = false;
@@ -220,7 +220,7 @@ public class SessionManager {
             }
             return session;
         } catch (Exception e) {
-            this.log.error("exception loadSession [Id=" + sessionId + "]", e);
+            this.log.error("【统一session["+sessionId+"]】 exception loadSession [Id=" + sessionId + "]", e);
         }
         return null;
     }

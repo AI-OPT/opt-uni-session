@@ -4,6 +4,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ai.opt.uni.session.SessionListener;
 
 import java.io.Serializable;
@@ -14,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings("deprecation")
 public class CacheHttpSession implements HttpSession, Serializable {
+	private Logger log = LoggerFactory.getLogger(CacheHttpSession.class);
     private static final long serialVersionUID = 1L;
     protected long creationTime = 0L;
     protected String id;
@@ -123,8 +127,13 @@ public class CacheHttpSession implements HttpSession, Serializable {
     public void invalidate() {
         this.expired = true;
         this.isDirty = true;
-        if (this.listener != null)
-            this.listener.onInvalidated(this);
+        if (this.listener != null){
+        	log.info("开始  【统一session["+id+"] this.listener】 不为空，开始销毁session");
+        	this.listener.onInvalidated(this);        
+        	log.info("结束  【统一session["+id+"] this.listener】 不为空，结束销毁session");
+        }else{
+        	log.info("销毁session失败  【统一session["+id+"] this.listener】 为空，无法销毁session");
+        }
     }
 
     public boolean isNew() {
