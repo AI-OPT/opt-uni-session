@@ -18,7 +18,7 @@ import com.ai.opt.uni.session.exception.SessionException;
 public class SessionManager {
 
     private Logger log = LoggerFactory.getLogger(SessionManager.class);
-    private static final String SESSION_ID_PREFIX = "R_JSID_";
+    public static final String SESSION_ID_PREFIX = "R_JSID_";
     private String sessionCookieName = "AIOPT_JSESSIONID";
     private SessionClient cacheClient = new SessionClient();
     private int expirationUpdateInterval = 300;
