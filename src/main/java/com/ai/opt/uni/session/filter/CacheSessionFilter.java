@@ -12,6 +12,13 @@ import com.ai.opt.uni.session.impl.SessionManager;
 
 import java.io.IOException;
 
+/**
+ * 缓存过滤器
+ * Date: 2017年2月9日 <br>
+ * Copyright (c) 2017 asiainfo.com <br>
+ * 
+ * @author
+ */
 public class CacheSessionFilter implements Filter {
     // public static final String[] IGNORE_SUFFIX = { ".png", ".jpg", ".jpeg",
     // ".gif", ".css", ".js", ".html", ".htm" };
@@ -22,6 +29,9 @@ public class CacheSessionFilter implements Filter {
 
     }
 
+    /**
+     * doFilter接口
+     */
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
@@ -43,6 +53,12 @@ public class CacheSessionFilter implements Filter {
         }
     }
 
+    /**
+     * 判断uri是否拦截
+     * @param request
+     * @return
+     * @author
+     */
     private boolean shouldFilter(HttpServletRequest request) {
         String uri = request.getRequestURI().toLowerCase();
         for (String suffix : IGNORE_SUFFIX) {
@@ -52,6 +68,9 @@ public class CacheSessionFilter implements Filter {
         return true;
     }
 
+    /**
+     * 初始化
+     */
     public void init(FilterConfig fc) throws ServletException {
         String ignore_suffix = fc.getInitParameter("ignore_suffix");
         if (!"".equals(ignore_suffix))

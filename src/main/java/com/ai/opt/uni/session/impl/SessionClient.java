@@ -15,15 +15,26 @@ import com.ai.paas.ipaas.mcs.interfaces.ICacheClient;
 
 /**
  * redis的客户端实现
+ * Date: 2017年2月9日 <br>
+ * Copyright (c) 2017 asiainfo.com <br>
+ * 
+ * @author
  */
 public class SessionClient {
 	  private static final Log LOG = LogFactory.getLog(SessionClient.class);
 
-    //private static final String SESSION_PAAS_NAMESPACE = "com.ai.runner.uni.session.SessionClient";
+    /**
+     * private static final String SESSION_PAAS_NAMESPACE = "com.ai.runner.uni.session.SessionClient";
+     */
     private static String SESSION_PAAS_NAMESPACE  ;
     private static final String PROPERTIES_FILE_NAME = "unisession";
     private static final String PROPERTIES_KEY = "SESSION_PAAS_NAMESPACE";
     
+    /**
+     * 通过命名空间获取session
+     * @return
+     * @author
+     */
     public static String getSessionPassNameSpace() {
     	LOG.debug("【-_-】SessionClient.getSessionPassNameSpace() begin...");
     	if(SESSION_PAAS_NAMESPACE == null) {
@@ -40,6 +51,11 @@ public class SessionClient {
     	return SESSION_PAAS_NAMESPACE;
     }
 
+    /**
+     * 获取cacheclient客户端
+     * @return
+     * @author
+     */
     public static ICacheClient getCacheClient() {
     	long t1=System.currentTimeMillis();   
     	LOG.debug("【-_-】SessionClient.getCacheClient() begin.........................");
@@ -52,6 +68,13 @@ public class SessionClient {
     			"{ CacheClientBuilderFactory.getCacheClientBuilder().getCacheClientcost(NameSpace) cost time: " +t2);
     	return CacheClient;
     }
+    /**
+     * 添加条目
+     * @param key
+     * @param object
+     * @param seconds
+     * @author
+     */
     public void addItem(String key, Object object, int seconds) {
     	long t1=System.currentTimeMillis();   
     	LOG.debug("SessionClient。addItem ：key="+key+"begin");
@@ -60,6 +83,12 @@ public class SessionClient {
     	LOG.debug("SessionClient。addItem ：key="+key+"end .{ getCacheClient().setex cost time: " +t2);
     }
 
+    /**
+     * 序列化
+     * @param object
+     * @return
+     * @author
+     */
     private static byte[] serialize(Object object) {
         if (object == null)
             return null;
@@ -88,6 +117,12 @@ public class SessionClient {
     }
 
 
+    /**
+     * 删除条目
+     * @param key
+     * @return
+     * @author
+     */
     public long delItem(String key) {
     	LOG.debug("SessionClient。delItem ：key="+key+"begin");
     	return	getCacheClient().del(key.getBytes());
@@ -109,6 +144,12 @@ public class SessionClient {
         return deserialize(data);
     }
 
+    /**
+     * 反序列化
+     * @param bytes
+     * @return
+     * @author
+     */
     private static Object deserialize(byte[] bytes) {
         if (bytes == null)
             return null;

@@ -12,6 +12,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * CacheHttpSession
+ * Date: 2017年2月9日 <br>
+ * Copyright (c) 2017 asiainfo.com <br>
+ * 
+ * @author
+ */
 @SuppressWarnings("deprecation")
 public class CacheHttpSession implements HttpSession, Serializable {
     private static final long serialVersionUID = 1L;
@@ -26,7 +33,9 @@ public class CacheHttpSession implements HttpSession, Serializable {
     @SuppressWarnings({"unchecked", "rawtypes"})
     private Map<String, Object> data = new ConcurrentHashMap();
     
-    //GUCL:应用上下文
+    /**
+     * GUCL:应用上下文
+     */
     private String contextPath=null;
 
 	public String getContextPath() {

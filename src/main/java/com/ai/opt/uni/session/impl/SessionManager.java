@@ -15,6 +15,13 @@ import org.apache.commons.logging.LogFactory;
 import com.ai.opt.uni.session.RequestEventObserver;
 import com.ai.opt.uni.session.exception.SessionException;
 
+/**
+ * 缓存管理
+ * Date: 2017年2月9日 <br>
+ * Copyright (c) 2017 asiainfo.com <br>
+ * 
+ * @author
+ */
 public class SessionManager {
 
     private Log log = LogFactory.getLog(SessionManager.class);
@@ -31,6 +38,15 @@ public class SessionManager {
             SESSION_ID_COOKIE = sessionInCookie;
     }
 
+    /**
+     * 创建session
+     * @param request
+     * @param response
+     * @param requestEventSubject
+     * @param create
+     * @return
+     * @author
+     */
     public CacheHttpSession createSession(
             SessionHttpServletRequestWrapper request,
             HttpServletResponse response,
@@ -52,6 +68,12 @@ public class SessionManager {
         return session;
     }
 
+    /**
+     * 获取sessionId
+     * @param request
+     * @return
+     * @author
+     */
     private String getRequestedSessionId(HttpServletRequestWrapper request) {
         // String cookid=request.getRequestedSessionId();
         // System.out.println(cookid);
@@ -65,6 +87,11 @@ public class SessionManager {
         return null;
     }
 
+    /**
+     * 保存session
+     * @param session
+     * @author
+     */
     private void saveSession(CacheHttpSession session) {
         try {
             if (this.log.isDebugEnabled())
@@ -85,6 +112,13 @@ public class SessionManager {
         }
     }
 
+    /**
+     * 创建空白session
+     * @param request
+     * @param response
+     * @return
+     * @author
+     */
     private CacheHttpSession createEmptySession(
             SessionHttpServletRequestWrapper request,
             HttpServletResponse response) {
@@ -101,10 +135,23 @@ public class SessionManager {
         return session;
     }
 
+    /**
+     * 创建sessionId
+     * @return
+     * @author
+     */
     private String createSessionId() {
         return UUID.randomUUID().toString().replace("-", "").toUpperCase();
     }
 
+    /**
+     * 触发事件
+     * @param session
+     * @param request
+     * @param response
+     * @param requestEventSubject
+     * @author
+     */
     private void attachEvent(final CacheHttpSession session,
                              final HttpServletRequestWrapper request,
                              final HttpServletResponse response,
@@ -138,6 +185,13 @@ public class SessionManager {
         });
     }
 
+    /**
+     * 添加cookie
+     * @param session
+     * @param request
+     * @param response
+     * @author
+     */
     private void addCookie(CacheHttpSession session,
                            HttpServletRequestWrapper request, HttpServletResponse response) {
         Cookie cookie = new Cookie(SESSION_ID_COOKIE, null);
@@ -158,6 +212,13 @@ public class SessionManager {
         response.addCookie(cookie);
     }
 
+    /**
+     * 保存cookie
+     * @param session
+     * @param request
+     * @param response
+     * @author
+     */
     private void saveCookie(CacheHttpSession session,
                             HttpServletRequestWrapper request, HttpServletResponse response) {
         if ((!session.isNew) && (!session.expired))
@@ -183,6 +244,12 @@ public class SessionManager {
                     + "]");
     }
 
+    /**
+     * 加载session
+     * @param sessionId
+     * @return
+     * @author
+     */
     private CacheHttpSession loadSession(String sessionId) {
         CacheHttpSession session;
         try {
@@ -208,21 +275,45 @@ public class SessionManager {
         return null;
     }
 
+    /**
+     * 生成SessionKey
+     * @param sessionId
+     * @return
+     * @author
+     */
     private String generatorSessionKey(String sessionId) {
         return SESSION_ID_PREFIX.concat(sessionId);
         // return "R_JSID_".concat(sessionId);
     }
 
+    /**
+     * 通过cache获取session
+     * @param id
+     * @return
+     * @author
+     */
     public HttpSession getSessionFromCache(String id) {
         Object obj = cacheClient.getSession(id);
         return (HttpSession) obj;
 
     }
 
+    /**
+     * 通过cache保存session
+     * @param id
+     * @param session
+     * @param liveTime
+     * @author
+     */
     public void saveSessionToCache(String id, HttpSession session, int liveTime) {
         cacheClient.addItem(id, session, liveTime);
     }
 
+    /**
+     * 通过cache移除session
+     * @param id
+     * @author
+     */
     public void removeSessionFromCache(String id) {
         cacheClient.delItem(id);
     }

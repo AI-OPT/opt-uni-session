@@ -5,6 +5,13 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * HttpServletRequest封装器
+ * Date: 2017年2月9日 <br>
+ * Copyright (c) 2017 asiainfo.com <br>
+ * 
+ * @author
+ */
 public class SessionHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	  private HttpServletResponse response;
