@@ -159,6 +159,7 @@ public class SessionManager {
         	cookiePath="/";
         }
         cookie.setPath(cookiePath);
+        cookie.setHttpOnly(true);
         log.info("【统一session["+session.id+"]】 sessionCookieName="+sessionCookieName);
     	log.info("【统一session["+session.id+"]】 domain="+domain);
     	log.info("【统一session["+session.id+"]】 cookiePath="+cookiePath);
